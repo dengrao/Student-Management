@@ -1,0 +1,85 @@
+{%extends 'base.html' %}
+{%block content%}
+
+               {% include 'includes/messages.html' %}
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card">
+                        <div class="card-body">
+                           {%if action is None%}
+                           <form action = "?action=get_student" method="post">
+                              {% csrf_token %}
+                              <div class="row">
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Take Attendance</span></h5>
+                                 </div>
+
+                                 <div class="col-12 col-sm-6">
+                                    <label>Subject</label>
+                                       <select class="form-control" name = 'subject_id' required>
+                                          <option>Select Subject</option>
+                                          {% for i in subject %}
+                                          <option value="{{i.id}}">{{i.name}}</option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                                 <div class="col-12 col-sm-6">
+                                    <label>Session Year</label>
+                                       <select class="form-control" name = 'session_year_id' required>
+                                          <option>Select Session Year</option>
+                                          {% for i in session_year %}
+                                          <option value="{{i.id}}">{{i.session_start}} To {{i.session_end}}</option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                                 <br>
+                                 <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary">Fetch Students</button>
+                                 </div>
+                              </div>
+                           </form>
+                           {%else%}
+                              <form action = "{%url 'add_subject' %}" method="post">
+                              {% csrf_token %}
+                              <div class="row">
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Subject Information</span></h5>
+                                 </div>
+                                 <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                       <label>Subject Name</label>
+                                       <input type="text" class="form-control" name="subject_name" required>
+                                    </div>
+                                 </div>
+                                 <div class="col-12 col-sm-6">
+                                    <label>Course</label>
+                                       <select class="form-control" name = 'course_id' required>
+                                          <option>Select Course</option>
+                                          {% for i in course %}
+                                          <option value="{{i.id}}">{{i.name}}</option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                                 <div class="col-12 col-sm-6">
+                                    <label>Staff</label>
+                                       <select class="form-control" name = 'staff_id' required>
+                                          <option>Select Staff</option>
+                                          {% for i in staff %}
+                                          <option value="{{i.id}}">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                                 <br>
+                                 <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                 </div>
+                              </div>
+                           </form>
+                           {%endif%}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+{%endblock%}
